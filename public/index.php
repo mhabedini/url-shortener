@@ -6,7 +6,9 @@ use Filimo\UrlShortener\Support\Http\Router;
 
 require_once __DIR__ . '/../bootstrap/app.php';
 
-$uri = trim($_SERVER['REQUEST_URI'], '/');
+$requestUri = $_SERVER['REQUEST_URI'];
+$uri = trim(parse_url($requestUri, PHP_URL_PATH), '/');
+$data = $_REQUEST;
 $httpMethod = HttpMethod::from($_SERVER['REQUEST_METHOD']);
 $directController = Router::direct($uri, $httpMethod);
 $class = new $directController[0];
