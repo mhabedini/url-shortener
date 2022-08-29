@@ -3,6 +3,9 @@
     "type": "project",
     "license": "MIT",
     "autoload": {
+        "files": [
+            "src/Illuminate/Collections/helpers.php"
+        ],
         "psr-4": {
             "Filimo\\UrlShortener\\": "src/"
         }
@@ -18,9 +21,15 @@
             "email": "m.h.a.abedini@gmail.com"
         }
     ],
-    "minimum-stability": "dev",
-    "require": {},
+    "require": {
+        "vlucas/phpdotenv": "^5.4",
+        "phpoption/phpoption": "^1.9",
+        "illuminate/collections": "^9.26",
+        "ext-pdo": "*"
+    },
     "require-dev": {
         "phpunit/phpunit": "^9.5.10"
-    }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
