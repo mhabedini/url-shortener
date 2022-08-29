@@ -21,7 +21,7 @@ class Env
      *
      * @var RepositoryInterface|null
      */
-    protected static ?RepositoryInterface $repository;
+    protected static ?RepositoryInterface $repository = null;
 
     /**
      * Enable the putenv adapter.
