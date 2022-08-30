@@ -42,6 +42,13 @@ class Builder
         return $this;
     }
 
+    private function exec($query)
+    {
+        $statement = $this->pdo->prepare($query);
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     public function limit(int $limit): static
     {
         $this->limit = $limit;
@@ -53,9 +60,7 @@ class Builder
         $columns = implode(', ', $this->columns);
         $query = "SELECT $columns FROM $this->table";
         $query .= $this->buildQuery();
-        $statement = $this->pdo->prepare($query);
-        $statement->execute();
-        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+        $result = $this->exec($query);
         if (empty($result)) {
             return null;
         }
@@ -67,9 +72,8 @@ class Builder
         $query = "SELECT EXISTS(SELECT * FROM $this->table";
         $query .= $this->buildQuery();
         $query .= ');';
-        $statement = $this->pdo->prepare($query);
-        $statement->execute();
-        return array_values($statement->fetchAll(PDO::FETCH_ASSOC)[0])[0];
+        $result = $this->exec($query)[0];
+        return array_values($result)[0];
     }
 
     public function count()
@@ -77,9 +81,8 @@ class Builder
         $query = "SELECT count(*) as `count` FROM $this->table";
         $query .= $this->buildQuery();
 
-        $statement = $this->pdo->prepare($query);
-        $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_ASSOC)[0]['count'];
+        $result = $this->exec($query);
+        return $result[0]['count'];
     }
 
     public function first()
@@ -111,16 +114,13 @@ class Builder
         $statement = $this->pdo->prepare("SHOW KEYS FROM $this->table WHERE Key_name = 'PRIMARY'");
         $statement->execute();
         $primaryKey = $statement->fetch(PDO::FETCH_ASSOC)['Column_name'];
-        $statement = $this->pdo->prepare("select * from $this->table where $primaryKey = $primaryValue LIMIT 1;");
-        $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_ASSOC)[0];
+        $query = "select * from $this->table where $primaryKey = $primaryValue LIMIT 1;";
+        return $this->exec($query)[0];
     }
 
     public function all(): array
     {
-        $statement = $this->pdo->prepare("select * from $this->table");
-        $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $this->exec("select * from $this->table");
     }
 
     public function create(array $data): array
