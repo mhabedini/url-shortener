@@ -37,7 +37,7 @@ class App
     {
         $this->registerRoutes();
         $this->registerConfigs();
-        $this->registerDatabase();
+        //$this->registerDatabase();
     }
 
     private function registerRoutes(): void
