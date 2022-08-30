@@ -1,7 +1,6 @@
 <?php
 declare(strict_types=1);
 
-use Phinx\Db\Adapter\MysqlAdapter;
 use Phinx\Migration\AbstractMigration;
 
 final class LinksMigration extends AbstractMigration
@@ -20,7 +19,7 @@ final class LinksMigration extends AbstractMigration
     public function change(): void
     {
         $links = $this->table('links');
-        $links->addColumn('user_id', 'integer')
+        $links->addColumn('user_id', 'integer', ['null' => true])
             ->addColumn('title', 'string', ['limit' => 30, 'null' => true])
             ->addColumn('original_link', 'text', ['limit' => 400])
             ->addColumn('short_link', 'string', ['limit' => 10])

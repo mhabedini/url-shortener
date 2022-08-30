@@ -101,7 +101,7 @@ class App
 
     public function queryBuilder(string $table): Builder
     {
-        return new Builder($this->pdo, $table);
+        return (new Builder($this->pdo))->table($table);
     }
 
     private function registerEnv(): void
@@ -119,5 +119,13 @@ class App
     public function terminate(): void
     {
         $this->pdo = null;
+    }
+
+    /**
+     * @return PDO|null
+     */
+    public function getPdo(): ?PDO
+    {
+        return $this->pdo;
     }
 }

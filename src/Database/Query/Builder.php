@@ -2,6 +2,7 @@
 
 namespace Filimo\UrlShortener\Database\Query;
 
+use Illuminate\Support\Collection;
 use PDO;
 
 class Builder
@@ -10,17 +11,22 @@ class Builder
     protected string $table;
     protected string $database;
 
-    public function __construct(PDO $pdo, string $table)
+    public function __construct(PDO $pdo)
     {
         $this->pdo = $pdo;
-        $this->table = $table;
         $this->database = config('database.database');
     }
 
-    public function all(): bool|array
+    public function table(string $table): static
+    {
+        $this->table = $table;
+        return $this;
+    }
+
+    public function all(): Collection
     {
         $statement = $this->pdo->prepare("select * from $this->database.$this->table");
         $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_CLASS);
+        return collect($statement->fetchAll(PDO::FETCH_ASSOC));
     }
 }

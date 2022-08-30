@@ -2,12 +2,14 @@
 
 namespace Filimo\UrlShortener\Http\Controller;
 
+use Filimo\UrlShortener\Database\DB;
+use Illuminate\Support\Collection;
+
 class AuthController extends Controller
 {
-    public function login()
+    public function login(): Collection
     {
-        $users = app()->queryBuilder('users')->all();
-        return json_encode($users, JSON_THROW_ON_ERROR);
+        return DB::table('users')->all();
     }
 
     public function signup()

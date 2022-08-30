@@ -2,10 +2,14 @@
 
 namespace Tests;
 
+use Filimo\UrlShortener\Database\DB;
+
 class ExampleTest extends TestCase
 {
     public function testHello()
     {
-        $this->assertEquals(4, 2 + 2);
+        $users = DB::table('users')->all();
+
+        $this->assertEquals($users, collect());
     }
 }
