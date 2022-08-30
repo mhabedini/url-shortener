@@ -52,3 +52,16 @@ if (!function_exists('preg_array_key_exists')) {
         return false;
     }
 }
+
+if (!function_exists('rand_str')) {
+    function rand_str(int $length)
+    {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
+    }
+}

@@ -3,6 +3,7 @@
 namespace Filimo\UrlShortener\Database;
 
 
+use Exception;
 use Filimo\UrlShortener\Database\Query\Builder;
 
 class DB
@@ -12,10 +13,24 @@ class DB
         return app()->queryBuilder($table);
     }
 
-    public static function transaction($function): void
+    /**
+     * @throws Exception
+     */
+    public static function transaction($function, int $retry)
     {
-        app()->getPdo()->beginTransaction();
-        $function();
-        app()->getPdo()->commit();
+        do {
+            try {
+                app()->getPdo()->beginTransaction();
+                $result = $function();
+                app()->getPdo()->commit();
+                return $result;
+            } catch (Exception $exception) {
+                app()->getPdo()->rollBack();
+                $retry--;
+                if ($retry == 0) {
+                    throw  $exception;
+                }
+            }
+        } while (true);
     }
 }

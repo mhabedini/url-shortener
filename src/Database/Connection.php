@@ -14,6 +14,6 @@ class Connection
         $username = config('database.username');
         $password = config('database.password');
 
-        return new PDO("$connection:host=$host;dbname:$database;", $username, $password, [PDO::ERRMODE_EXCEPTION]);
+        return new PDO("$connection:host=$host;dbname=$database", $username, $password, [PDO::ERRMODE_EXCEPTION]);
     }
 }
