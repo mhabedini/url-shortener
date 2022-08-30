@@ -1,6 +1,5 @@
 <?php
 
-
 return [
     'connection' => environment('DB_CONNECTION', 'mysql'),
     'host' => environment('DB_HOST', '127.0.0.1'),

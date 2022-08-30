@@ -2,8 +2,13 @@
 
 namespace Filimo\UrlShortener\Support;
 
+use Dotenv\Dotenv;
+use Dotenv\Repository\Adapter\EnvConstAdapter;
+use Dotenv\Repository\Adapter\PutenvAdapter;
+use Dotenv\Repository\RepositoryBuilder;
 use Exception;
 use Filimo\UrlShortener\Database\Connection;
+use Filimo\UrlShortener\Database\Query\Builder;
 use Filimo\UrlShortener\Support\Http\Router;
 use PDO;
 
@@ -35,9 +40,10 @@ class App
 
     private function registerBaseBindings(): void
     {
+        $this->registerEnv();
         $this->registerRoutes();
         $this->registerConfigs();
-        //$this->registerDatabase();
+        $this->registerDatabase();
     }
 
     private function registerRoutes(): void
@@ -91,5 +97,27 @@ class App
     private function registerDatabase(): void
     {
         $this->pdo = Connection::make();
+    }
+
+    public function queryBuilder(string $table): Builder
+    {
+        return new Builder($this->pdo, $table);
+    }
+
+    private function registerEnv(): void
+    {
+        $repository = RepositoryBuilder::createWithNoAdapters()
+            ->addAdapter(EnvConstAdapter::class)
+            ->addWriter(PutenvAdapter::class)
+            ->immutable()
+            ->make();
+
+        $dotenv = Dotenv::create($repository, $this->basePath);
+        $dotenv->load();
+    }
+
+    public function terminate(): void
+    {
+        $this->pdo = null;
     }
 }
