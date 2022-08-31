@@ -15,7 +15,7 @@ class LinkShortenerService
     /**
      * @throws Exception
      */
-    public static function create(string $originalLink, ?string $title = null, ?int $userId = null)
+    public static function store(string $originalLink, ?string $title = null, ?int $userId = null)
     {
         return DB::transaction(function () use ($userId, $title, $originalLink) {
             $link = DB::table('links')->where('original_link', '=', $originalLink)->first();

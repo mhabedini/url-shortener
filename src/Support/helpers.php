@@ -65,3 +65,10 @@ if (!function_exists('rand_str')) {
         return $randomString;
     }
 }
+
+if (!function_exists('response')) {
+    function json(mixed $data, int $code = 200): string
+    {
+        return json_encode($data);
+    }
+}
