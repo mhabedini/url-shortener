@@ -7,7 +7,10 @@ use Filimo\UrlShortener\Support\Database\DB;
 
 class Controller
 {
-    protected function authorize($throw = false)
+    /**
+     * @throws HttpException
+     */
+    protected function authorize($throw = false): ?array
     {
         $token = request()->header('Authorization');
         $session = DB::table('sessions')->where('token', '=', hash('sha256', $token))

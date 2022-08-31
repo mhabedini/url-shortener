@@ -16,23 +16,32 @@ class UserLinkController extends Controller
         $this->user = $this->authorize(true);
     }
 
-    public function index()
+    public function index(): string
     {
         return apiResponse(LinkShortenerService::index($this->user['id']));
     }
 
-    public function update(int $linkId, Request $request)
+    /**
+     * @throws HttpException
+     */
+    public function update(int $linkId, Request $request): string
     {
         $this->checkUserOwnsLink($linkId);
         return apiResponse(LinkShortenerService::update($linkId, $request->all()));
     }
 
-    public function delete(int $linkId)
+    /**
+     * @throws HttpException
+     */
+    public function delete(int $linkId): string
     {
         $this->checkUserOwnsLink($linkId);
         return apiResponse(["success" => LinkShortenerService::delete($linkId)]);
     }
 
+    /**
+     * @throws HttpException
+     */
     public function checkUserOwnsLink($linkId)
     {
         $link = DB::table('links')->find($linkId);

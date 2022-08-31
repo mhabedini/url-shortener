@@ -71,6 +71,7 @@ if (!function_exists('rand_str')) {
 if (!function_exists('response')) {
     function apiResponse(mixed $data, int $code = 200): string
     {
+        header('Content-Type: application/json; charset=utf-8');
         http_response_code($code);
         return json_encode($data);
     }

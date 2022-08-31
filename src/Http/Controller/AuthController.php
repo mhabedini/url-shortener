@@ -8,12 +8,15 @@ use Filimo\UrlShortener\Support\Http\Request;
 
 class AuthController extends Controller
 {
-    public function login(Request $request)
+    /**
+     * @throws HttpException
+     */
+    public function login(Request $request): string
     {
         $data = $request->all();
         $user = $this->authenticate($data['username'], $data['password']);
 
-        if ($user) {
+        if (!$user) {
             throw new HttpException('The username or password is wrong', 400);
         }
         unset($user['password']);
