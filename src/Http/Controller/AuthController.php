@@ -2,14 +2,11 @@
 
 namespace Filimo\UrlShortener\Http\Controller;
 
-use Filimo\UrlShortener\Database\DB;
-use Illuminate\Support\Collection;
-
 class AuthController extends Controller
 {
-    public function login(): Collection
+    public function login()
     {
-        return DB::table('users')->all();
+
     }
 
     public function signup()

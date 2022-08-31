@@ -69,6 +69,7 @@ if (!function_exists('rand_str')) {
 if (!function_exists('response')) {
     function json(mixed $data, int $code = 200): string
     {
+        http_response_code($code);
         return json_encode($data);
     }
 }
