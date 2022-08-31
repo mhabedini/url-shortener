@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 use Phinx\Migration\AbstractMigration;
 
-final class LinksMigration extends AbstractMigration
+final class SessionMigration extends AbstractMigration
 {
     /**
      * Change Method.
@@ -18,14 +18,13 @@ final class LinksMigration extends AbstractMigration
      */
     public function change(): void
     {
-        $links = $this->table('links');
-        $links->addColumn('user_id',  ['null' => true])
-            ->addColumn('title', 'string', ['limit' => 30, 'null' => true])
-            ->addColumn('original_link', 'text', ['limit' => 400])
-            ->addColumn('short_link', 'string', ['limit' => 10])
+        $sessions = $this->table('sessions');
+        $sessions->addColumn('token', 'string', ['limit' => 20])
+            ->addColumn('user_id', 'integer',)
+            ->addColumn('expires_at', 'string', ['limit' => 30, 'null' => true])
             ->addTimestamps()
             ->addForeignKey('user_id', 'users', 'id', ['delete' => 'RESTRICT'])
-            ->addIndex(['short_link'], ['unique' => true])
+            ->addIndex(['token'])
             ->create();
     }
 }

@@ -9,26 +9,26 @@ class LinkController extends Controller
 {
     public function index()
     {
-        return json(LinkShortenerService::index());
+        return apiResponse(LinkShortenerService::index());
     }
 
     public function store(Request $request)
     {
-        return json(LinkShortenerService::store(...$request->all()), 201);
+        return apiResponse(LinkShortenerService::store(...$request->all()), 201);
     }
 
     public function show(string $shortPath)
     {
-        return json(LinkShortenerService::show($shortPath));
+        return apiResponse(LinkShortenerService::show($shortPath));
     }
 
     public function update(int $linkId, Request $request)
     {
-        return json(LinkShortenerService::update($linkId, $request->all()));
+        return apiResponse(LinkShortenerService::update($linkId, $request->all()));
     }
 
     public function delete(int $linkId)
     {
-        return json(LinkShortenerService::delete($linkId));
+        return apiResponse(LinkShortenerService::delete($linkId));
     }
 }

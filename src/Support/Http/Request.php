@@ -78,4 +78,9 @@ class Request
     {
         return array_merge($this->query + $this->request);
     }
+
+    public function get($key, $default = null)
+    {
+        return $this->all()[$key] ?? $default;
+    }
 }
