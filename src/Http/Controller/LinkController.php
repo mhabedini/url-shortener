@@ -16,9 +16,9 @@ class LinkController extends Controller
         return json(LinkShortenerService::store($linkId, $request), 201);
     }
 
-    public function show(string $hash)
+    public function show($shortPath)
     {
-        return json(LinkShortenerService::show($hash), 201);
+        return json(LinkShortenerService::show($shortPath));
     }
 
     public function update(int $linkId, $request)

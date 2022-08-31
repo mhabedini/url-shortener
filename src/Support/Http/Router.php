@@ -24,17 +24,25 @@ class Router
         return static::$instance;
     }
 
-    public static function load(string $file, $prefix = ''): static
+    public static function load(string $file, string $basePath, $prefix = ''): static
     {
         $router = self::getInstance();
-        $router->prefix = $prefix;
-        require_once dirname(__FILE__) . "/../../../routes/$file";
+        $router->setPrefix($prefix);
+        require_once $basePath . "/routes/$file";
         return $router;
+    }
+
+    public function setPrefix(string $prefix): void
+    {
+        $prefix = trim($prefix, '/');
+        $this->prefix = $prefix;
     }
 
     public function define(string $address, array $controller, HttpMethod $method): void
     {
-        $this->routes[$method->value][$this->prefix . '/' . trim($address, '/')] = $controller;
+        $address = $this->prefix . '/' . trim($address, '/');
+        $this->routes[$method->value][$address] = $controller;
+        $this->routes[$method->value][$address]['url_parts'] = explode('/', $address);
     }
 
     /**
@@ -42,22 +50,37 @@ class Router
      */
     public static function respond(string $uri, HttpMethod $method)
     {
+        $uri = trim($uri, '/');
+        $uriParts = explode('/', $uri);
         $router = self::getInstance();
         if (array_key_exists($method->value, $router->routes)) {
-            if (array_key_exists($uri, $router->routes[$method->value])) {
-                $data = $router->routes[$method->value][$uri];
-                return self::call($data[0], $data[1]);
+            $routes = array_filter($router->routes[$method->value], function ($value) use ($uriParts) {
+                return count($value['url_parts']) === count($uriParts);
+            });
+
+            $parameters = [];
+            foreach ($routes as $route) {
+                $routeParts = $route['url_parts'];
+                for ($i = 0; $i < count($routeParts); $i++) {
+                    if (str_starts_with($routeParts[$i], '{') && str_ends_with($routeParts[$i], '}')) {
+                        $parameters = array_merge($parameters, [
+                            ltrim(rtrim($routeParts[$i], '}'), '{') => $uriParts[$i]
+                        ]);
+                    } elseif ($routeParts[$i] != $uriParts[$i]) {
+                        continue 2;
+                    }
+                }
+                return self::call($route[0], $route[1], $parameters);
             }
         }
         throw new Exception('Not route defined for this URI');
     }
 
-    public static function call($controller, $action)
+    public static function call($controller, $action, $parameters)
     {
-
         if (!method_exists($controller, $action)) {
             throw new Exception("$controller does not support $action() action");
         }
-        return (new $controller)->$action();
+        return (new $controller)->$action(...$parameters);
     }
 }

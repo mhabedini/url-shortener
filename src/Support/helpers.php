@@ -3,6 +3,7 @@
 
 use Filimo\UrlShortener\Support\App;
 use Filimo\UrlShortener\Support\Env;
+use JetBrains\PhpStorm\NoReturn;
 
 if (!function_exists('environment')) {
     /**
@@ -71,5 +72,14 @@ if (!function_exists('response')) {
     {
         http_response_code($code);
         return json_encode($data);
+    }
+}
+
+if (!function_exists('dd')) {
+    #[NoReturn]
+    function dd(...$parameters): void
+    {
+        var_dump($parameters);
+        die();
     }
 }

@@ -48,7 +48,7 @@ class App
 
     private function registerRoutes(): void
     {
-        Router::load('api.php', 'api');
+        Router::load('api.php', $this->getBasePath(), 'api');
     }
 
     private function registerConfigs(): void
