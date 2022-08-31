@@ -14,14 +14,14 @@ cp .env.example .env
 composer i
 ```
 
-3. Run a php server
+3. Run database migrations
+```
+vendor/bin/phinx migrate
+```
+
+4. Run a php server
 ```
 cd public
 php -S localhost:8000 
-```
-
-4. Run database migrations
-```
-vendor/bin/phinx migrate
 ```
 
