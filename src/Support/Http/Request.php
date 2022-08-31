@@ -76,7 +76,13 @@ class Request
 
     public function all(): array
     {
-        return array_merge($this->query + $this->request);
+        $jsonRequestBody = $this->getJsonRequestBody();
+        return array_merge($this->query + $this->request, $jsonRequestBody);
+    }
+
+    private function getJsonRequestBody()
+    {
+        return json_decode(file_get_contents('php://input'), true);
     }
 
     public function get($key, $default = null)

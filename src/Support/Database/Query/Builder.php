@@ -63,6 +63,7 @@ class Builder
         $columns = implode(', ', $this->columns);
         $query = "SELECT $columns FROM $this->table";
         $query .= $this->buildQuery();
+        //dd($query);
         $result = $this->execute($query);
         if (empty($result)) {
             return [];
@@ -91,7 +92,7 @@ class Builder
     public function first()
     {
         $this->limit = 1;
-        return $this->get();
+        return $this->get()[0] ?? null;
     }
 
     private function buildQuery(): string

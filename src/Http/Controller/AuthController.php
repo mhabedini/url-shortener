@@ -37,7 +37,7 @@ class AuthController extends Controller
         return apiResponse($user);
     }
 
-    private function authenticate(string $username, string $password): array
+    private function authenticate(string $username, string $password): ?array
     {
         return DB::table('users')->where('username', '=', $username)
             ->where('password', '=', hash('sha256', $password))

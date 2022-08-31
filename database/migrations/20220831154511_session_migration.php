@@ -19,7 +19,7 @@ final class SessionMigration extends AbstractMigration
     public function change(): void
     {
         $sessions = $this->table('sessions');
-        $sessions->addColumn('token', 'string', ['limit' => 20])
+        $sessions->addColumn('token', 'string', ['limit' => 100])
             ->addColumn('user_id', 'integer',)
             ->addColumn('expires_at', 'string', ['limit' => 30, 'null' => true])
             ->addTimestamps()
