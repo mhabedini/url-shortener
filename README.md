@@ -16,7 +16,8 @@ composer i
 
 3. Run a php server
 ```
-php -S localhost:8000
+cd public
+php -S localhost:8000 
 ```
 
 4. Run database migrations
