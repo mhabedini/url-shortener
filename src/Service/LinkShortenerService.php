@@ -15,7 +15,7 @@ class LinkShortenerService
         return DB::transaction(function () use ($userId, $title, $originalLink) {
             $link = DB::table('links')->where('original_link', '=', $originalLink)->first();
             if (!is_null($link)) {
-                return $originalLink;
+                return $link;
             }
 
             do {
@@ -30,5 +30,10 @@ class LinkShortenerService
                 'short_link' => $random,
             ]);
         }, 5);
+    }
+
+    public static function delete(int $linkId): bool
+    {
+        return DB::table('links')->delete($linkId);
     }
 }

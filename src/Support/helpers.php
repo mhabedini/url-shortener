@@ -54,7 +54,7 @@ if (!function_exists('preg_array_key_exists')) {
 }
 
 if (!function_exists('rand_str')) {
-    function rand_str(int $length)
+    function rand_str(int $length): string
     {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $charactersLength = strlen($characters);

@@ -42,10 +42,13 @@ class Builder
         return $this;
     }
 
-    private function exec($query)
+    private function execute(string $query, bool $fetch = true): bool|array
     {
         $statement = $this->pdo->prepare($query);
-        $statement->execute();
+        $isSuccessful = $statement->execute();
+        if (!$fetch) {
+            return $isSuccessful;
+        }
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
@@ -60,7 +63,7 @@ class Builder
         $columns = implode(', ', $this->columns);
         $query = "SELECT $columns FROM $this->table";
         $query .= $this->buildQuery();
-        $result = $this->exec($query);
+        $result = $this->execute($query);
         if (empty($result)) {
             return null;
         }
@@ -72,7 +75,7 @@ class Builder
         $query = "SELECT EXISTS(SELECT * FROM $this->table";
         $query .= $this->buildQuery();
         $query .= ');';
-        $result = $this->exec($query)[0];
+        $result = $this->execute($query)[0];
         return array_values($result)[0];
     }
 
@@ -81,7 +84,7 @@ class Builder
         $query = "SELECT count(*) as `count` FROM $this->table";
         $query .= $this->buildQuery();
 
-        $result = $this->exec($query);
+        $result = $this->execute($query);
         return $result[0]['count'];
     }
 
@@ -109,18 +112,14 @@ class Builder
         return $query;
     }
 
-    public function find(mixed $primaryValue): array
+    public function find(int $id): array
     {
-        $statement = $this->pdo->prepare("SHOW KEYS FROM $this->table WHERE Key_name = 'PRIMARY'");
-        $statement->execute();
-        $primaryKey = $statement->fetch(PDO::FETCH_ASSOC)['Column_name'];
-        $query = "select * from $this->table where $primaryKey = $primaryValue LIMIT 1;";
-        return $this->exec($query)[0];
+        return $this->where('id', '=', $id)->first();
     }
 
     public function all(): array
     {
-        return $this->exec("select * from $this->table");
+        return $this->execute("select * from $this->table");
     }
 
     public function create(array $data): array
@@ -156,5 +155,17 @@ class Builder
         }
 
         return $statement->execute();
+    }
+
+
+    public function delete(int $id = null): bool
+    {
+        if (!is_null($id)) {
+            $this->where('id', '=', $id);
+        }
+
+        $query = "DELETE FROM $this->table";
+        $query .= $this->buildQuery();
+        return $this->execute($query, false);
     }
 }
