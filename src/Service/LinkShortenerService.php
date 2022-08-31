@@ -12,7 +12,7 @@ class LinkShortenerService
         return DB::table('links')->get();
     }
 
-    public static function show(string $hash): array
+    public static function show(string $hash): ?array
     {
         return DB::table('links')->where('short_link', '=', $hash)->first();
     }

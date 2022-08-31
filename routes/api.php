@@ -9,7 +9,7 @@ Route::post('auth/login', [AuthController::class, 'login']);
 Route::post('auth/signup', [AuthController::class, 'signup']);
 
 Route::get('links/{shortPath}', [LinkController::class, 'show']);
-Route::post('links', [UserLinkController::class, 'store']);
+Route::post('links', [LinkController::class, 'store']);
 
 Route::get('user/links', [UserLinkController::class, 'index']);
 Route::patch('user/links/{linkId}', [UserLinkController::class, 'update']);

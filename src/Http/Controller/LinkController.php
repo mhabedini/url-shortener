@@ -9,11 +9,17 @@ class LinkController extends Controller
 {
     public function store(Request $request)
     {
-        return apiResponse(LinkShortenerService::store(...$request->all()), 201);
+        $userId = null;
+        $link = LinkShortenerService::store($request->get('original_link'), $request->get('title'), $userId);
+        return apiResponse($link, 201);
     }
 
     public function show(string $shortPath)
     {
-        return apiResponse(LinkShortenerService::show($shortPath));
+        $link = LinkShortenerService::show($shortPath);
+        if (!$link) {
+            throw new \Exception('404 Not Found');
+        }
+        return apiResponse($link);
     }
 }

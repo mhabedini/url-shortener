@@ -19,6 +19,6 @@ class UserLinkController extends Controller
 
     public function delete(int $linkId)
     {
-        return apiResponse(LinkShortenerService::delete($linkId));
+        return apiResponse(["success" => LinkShortenerService::delete($linkId)]);
     }
 }

@@ -63,7 +63,6 @@ class Builder
         $columns = implode(', ', $this->columns);
         $query = "SELECT $columns FROM $this->table";
         $query .= $this->buildQuery();
-        //dd($query);
         $result = $this->execute($query);
         if (empty($result)) {
             return [];
@@ -159,7 +158,6 @@ class Builder
         }
         $query .= $this->buildConditions();
 
-        var_dump($query);
         $statement = $this->pdo->prepare($query);
         for ($i = 0; $i < count($values); $i++) {
             $type = PDO::PARAM_STR;
