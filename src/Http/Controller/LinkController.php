@@ -2,6 +2,7 @@
 
 namespace Filimo\UrlShortener\Http\Controller;
 
+use Filimo\UrlShortener\Exception\HttpException;
 use Filimo\UrlShortener\Service\LinkShortenerService;
 use Filimo\UrlShortener\Support\Http\Request;
 
@@ -18,7 +19,7 @@ class LinkController extends Controller
     {
         $link = LinkShortenerService::show($shortPath);
         if (!$link) {
-            throw new \Exception('404 Not Found');
+            throw new HttpException('404 Not Found', 404);
         }
         return apiResponse($link);
     }

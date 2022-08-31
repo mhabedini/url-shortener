@@ -2,6 +2,7 @@
 
 namespace Filimo\UrlShortener\Http\Controller;
 
+use Filimo\UrlShortener\Exception\HttpException;
 use Filimo\UrlShortener\Support\Database\DB;
 
 class Controller
@@ -14,7 +15,7 @@ class Controller
             ->first();
 
         if (!$session && $throw) {
-            throw new \Exception('You are not authorized', 403);
+            throw new HttpException('You are not authorized', 403);
         }
 
         if (!$session) {

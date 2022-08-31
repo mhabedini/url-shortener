@@ -11,6 +11,18 @@ $uri = trim(parse_url($requestUri, PHP_URL_PATH), '/');
 $data = $_REQUEST;
 $httpMethod = HttpMethod::from($_SERVER['REQUEST_METHOD']);
 
-echo Router::respond($uri, $httpMethod);
+try {
+    echo Router::respond($uri, $httpMethod);
+} catch (\Filimo\UrlShortener\Exception\HttpException $exception) {
+    if (environment('APP_DEBUG')) {
+        throw $exception;
+    }
+    echo apiResponse(["error" => $exception->getErrorMessage()], $exception->getCode());
+} catch (\Exception $exception) {
+    if (environment('APP_DEBUG')) {
+        throw $exception;
+    }
+    echo apiResponse(["error" => $exception->getMessage()], $exception->getCode());
+}
 
 $app->terminate();

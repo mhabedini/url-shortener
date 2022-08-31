@@ -2,6 +2,7 @@
 
 namespace Filimo\UrlShortener\Http\Controller;
 
+use Filimo\UrlShortener\Exception\HttpException;
 use Filimo\UrlShortener\Service\LinkShortenerService;
 use Filimo\UrlShortener\Support\Database\DB;
 use Filimo\UrlShortener\Support\Http\Request;
@@ -36,7 +37,7 @@ class UserLinkController extends Controller
     {
         $link = DB::table('links')->find($linkId);
         if (!$link || $link['user_id'] != $this->user['id']) {
-            throw new \Exception('No entry found', 404);
+            throw new HttpException('No entry found', 404);
         }
     }
 }

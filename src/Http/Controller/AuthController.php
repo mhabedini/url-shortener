@@ -2,6 +2,7 @@
 
 namespace Filimo\UrlShortener\Http\Controller;
 
+use Filimo\UrlShortener\Exception\HttpException;
 use Filimo\UrlShortener\Support\Database\DB;
 use Filimo\UrlShortener\Support\Http\Request;
 
@@ -12,8 +13,8 @@ class AuthController extends Controller
         $data = $request->all();
         $user = $this->authenticate($data['username'], $data['password']);
 
-        if (!$user) {
-            throw new \Exception('The username or password is wrong');
+        if ($user) {
+            throw new HttpException('The username or password is wrong', 400);
         }
         unset($user['password']);
         $token = $this->createSession($user);

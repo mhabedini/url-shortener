@@ -2,7 +2,7 @@
 
 namespace Filimo\UrlShortener\Support\Database\Query;
 
-use Exception;
+use Filimo\UrlShortener\Exception\HttpException;
 use PDO;
 
 class Builder
@@ -143,7 +143,7 @@ class Builder
     {
         $isSuccessful = $this->insert($data);
         if (!$isSuccessful) {
-            throw new Exception('An error occurred');
+            throw new HttpException('An error occurred when creating the data', 500);
         }
 
         $statement = $this->pdo->prepare('SELECT LAST_INSERT_ID();');

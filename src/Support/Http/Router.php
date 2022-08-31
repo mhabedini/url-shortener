@@ -3,6 +3,7 @@
 namespace Filimo\UrlShortener\Support\Http;
 
 use Exception;
+use Filimo\UrlShortener\Exception\HttpException;
 use ReflectionMethod;
 
 class Router
@@ -74,13 +75,13 @@ class Router
                 return self::call($route[0], $route[1], $parameters);
             }
         }
-        throw new Exception('Not route defined for this URI');
+        throw new HttpException('Not route defined for this URI', 404);
     }
 
     public static function call($controller, $action, $parameters)
     {
         if (!method_exists($controller, $action)) {
-            throw new Exception("$controller does not support $action() action");
+            throw new HttpException("$controller does not support $action() action", 500);
         }
         $method = new ReflectionMethod($controller, $action);
 
