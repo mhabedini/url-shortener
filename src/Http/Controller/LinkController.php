@@ -3,6 +3,7 @@
 namespace Filimo\UrlShortener\Http\Controller;
 
 use Filimo\UrlShortener\Service\LinkShortenerService;
+use Filimo\UrlShortener\Support\Http\Request;
 
 class LinkController extends Controller
 {
@@ -11,19 +12,19 @@ class LinkController extends Controller
         return json(LinkShortenerService::index());
     }
 
-    public function store(int $linkId, $request)
+    public function store(Request $request)
     {
-        return json(LinkShortenerService::store($linkId, $request), 201);
+        return json(LinkShortenerService::store(...$request->all()), 201);
     }
 
-    public function show($shortPath)
+    public function show(string $shortPath)
     {
         return json(LinkShortenerService::show($shortPath));
     }
 
-    public function update(int $linkId, $request)
+    public function update(int $linkId, Request $request)
     {
-        return json(LinkShortenerService::update($linkId, $request));
+        return json(LinkShortenerService::update($linkId, $request->all()));
     }
 
     public function delete(int $linkId)

@@ -3,6 +3,7 @@
 namespace Filimo\UrlShortener\Support\Http;
 
 use Exception;
+use ReflectionMethod;
 
 class Router
 {
@@ -81,6 +82,16 @@ class Router
         if (!method_exists($controller, $action)) {
             throw new Exception("$controller does not support $action() action");
         }
+        $method = new ReflectionMethod($controller, $action);
+
+        foreach ($method->getParameters() as $parameter) {
+            if ($parameter?->getType()?->getName() === Request::class) {
+                $parameters = array_merge($parameters, [
+                    $parameter->getName() => request(),
+                ]);
+            }
+        }
+
         return (new $controller)->$action(...$parameters);
     }
 }

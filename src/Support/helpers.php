@@ -3,6 +3,7 @@
 
 use Filimo\UrlShortener\Support\App;
 use Filimo\UrlShortener\Support\Env;
+use Filimo\UrlShortener\Support\Http\Request;
 use JetBrains\PhpStorm\NoReturn;
 
 if (!function_exists('environment')) {
@@ -81,5 +82,12 @@ if (!function_exists('dd')) {
     {
         var_dump($parameters);
         die();
+    }
+}
+
+if (!function_exists('request')) {
+    function request(): Request
+    {
+        return Request::createFromGlobalRequest();
     }
 }
