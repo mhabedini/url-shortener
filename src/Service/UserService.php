@@ -2,7 +2,7 @@
 
 namespace Filimo\UrlShortener\Service;
 
-use Filimo\UrlShortener\Database\DB;
+use Filimo\UrlShortener\Support\Database\DB;
 
 class UserService
 {

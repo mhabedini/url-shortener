@@ -1,6 +1,6 @@
 <?php
 
-namespace Filimo\UrlShortener\Database\Query;
+namespace Filimo\UrlShortener\Support\Database\Query;
 
 use PDO;
 

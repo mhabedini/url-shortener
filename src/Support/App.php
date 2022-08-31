@@ -7,8 +7,8 @@ use Dotenv\Repository\Adapter\EnvConstAdapter;
 use Dotenv\Repository\Adapter\PutenvAdapter;
 use Dotenv\Repository\RepositoryBuilder;
 use Exception;
-use Filimo\UrlShortener\Database\Connection;
-use Filimo\UrlShortener\Database\Query\Builder;
+use Filimo\UrlShortener\Support\Database\Connection;
+use Filimo\UrlShortener\Support\Database\Query\Builder;
 use Filimo\UrlShortener\Support\Http\Router;
 use PDO;
 

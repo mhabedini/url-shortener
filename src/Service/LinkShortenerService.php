@@ -3,7 +3,7 @@
 namespace Filimo\UrlShortener\Service;
 
 use Exception;
-use Filimo\UrlShortener\Database\DB;
+use Filimo\UrlShortener\Support\Database\DB;
 
 class LinkShortenerService
 {
