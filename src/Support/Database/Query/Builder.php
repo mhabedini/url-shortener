@@ -142,8 +142,9 @@ class Builder
     public function create(array $data): array
     {
         $isSuccessful = $this->insert($data);
+
         if (!$isSuccessful) {
-            throw new HttpException('An error occurred when creating the data', 500);
+            throw new HttpException('An error occurred when creating the data', 400);
         }
 
         $statement = $this->pdo->prepare('SELECT LAST_INSERT_ID();');
@@ -199,7 +200,6 @@ class Builder
             }
             $statement->bindValue($valuesName[$i], $values[$i], $type);
         }
-
         return $statement->execute();
     }
 

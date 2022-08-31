@@ -22,7 +22,7 @@ try {
     if (environment('APP_DEBUG')) {
         throw $exception;
     }
-    echo apiResponse(["error" => $exception->getMessage()], $exception->getCode());
+    echo apiResponse(["error" => $exception->getMessage()], 500);
 }
 
 $app->terminate();
