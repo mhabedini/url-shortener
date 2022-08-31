@@ -9,7 +9,7 @@ class LinkController extends Controller
 {
     public function store(Request $request)
     {
-        $userId = null;
+        $userId = $this->authorize(true)['id'] ?? null;
         $link = LinkShortenerService::store($request->get('original_link'), $request->get('title'), $userId);
         return apiResponse($link, 201);
     }

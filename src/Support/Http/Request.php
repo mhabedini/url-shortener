@@ -74,6 +74,16 @@ class Request
         return $this->server;
     }
 
+    public function header(string $key, mixed $default = null)
+    {
+        return $this->headers()[$key] ?? $default;
+    }
+
+    public function headers(): bool|array
+    {
+        return getallheaders();
+    }
+
     public function all(): array
     {
         $jsonRequestBody = $this->getJsonRequestBody();

@@ -7,9 +7,9 @@ use Filimo\UrlShortener\Support\Database\DB;
 
 class LinkShortenerService
 {
-    public static function index(): array
+    public static function index(int $userId = null): array
     {
-        return DB::table('links')->get();
+        return DB::table('links')->where('user_id', '=', $userId)->get();
     }
 
     public static function show(string $hash): ?array

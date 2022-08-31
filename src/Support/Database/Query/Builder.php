@@ -2,6 +2,7 @@
 
 namespace Filimo\UrlShortener\Support\Database\Query;
 
+use Exception;
 use PDO;
 
 class Builder
@@ -108,16 +109,27 @@ class Builder
         $query = '';
         if (!empty($this->conditions)) {
             $condition = $this->conditions[0];
-            $query .= " WHERE {$condition['column']} {$condition['operation']} '{$condition['value']}'";
+            $conditionValue = $this->prepareConditionValue($condition['value']);
+            $query .= " WHERE {$condition['column']} {$condition['operation']} $conditionValue";
             for ($i = 1; $i < count($this->conditions); $i++) {
                 $condition = $this->conditions[$i];
-                $query .= " {$condition['type']} {$condition['column']} {$condition['operation']} '{$condition['value']}'";
+                $conditionValue = $this->prepareConditionValue($condition['value']);
+                $query .= " {$condition['type']} {$condition['column']} {$condition['operation']} $conditionValue";
             }
         }
         return $query;
     }
 
-    public function find(int $id): array
+    public function prepareConditionValue($conditionValue)
+    {
+        if (is_null($conditionValue)) {
+            return 'null';
+        } else {
+            return "'$conditionValue'";
+        }
+    }
+
+    public function find(int $id): ?array
     {
         return $this->where('id', '=', $id)->first();
     }
@@ -131,7 +143,7 @@ class Builder
     {
         $isSuccessful = $this->insert($data);
         if (!$isSuccessful) {
-            throw new \Exception('An error occurred');
+            throw new Exception('An error occurred');
         }
 
         $statement = $this->pdo->prepare('SELECT LAST_INSERT_ID();');
