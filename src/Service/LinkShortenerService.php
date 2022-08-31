@@ -7,6 +7,11 @@ use Filimo\UrlShortener\Database\DB;
 
 class LinkShortenerService
 {
+    public static function index(): array
+    {
+        return DB::table('links')->get();
+    }
+
     /**
      * @throws Exception
      */
@@ -35,5 +40,11 @@ class LinkShortenerService
     public static function delete(int $linkId): bool
     {
         return DB::table('links')->delete($linkId);
+    }
+
+    public static function update(int $linkId, array $data): array
+    {
+        DB::table('links')->where('id', '=', $linkId)->update($data);
+        return DB::table('links')->find($linkId);
     }
 }

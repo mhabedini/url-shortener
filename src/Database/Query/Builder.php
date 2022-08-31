@@ -58,16 +58,16 @@ class Builder
         return $this;
     }
 
-    public function get()
+    public function get(): array
     {
         $columns = implode(', ', $this->columns);
         $query = "SELECT $columns FROM $this->table";
         $query .= $this->buildQuery();
         $result = $this->execute($query);
         if (empty($result)) {
-            return null;
+            return [];
         }
-        return $result[0];
+        return $result;
     }
 
     public function exists()
@@ -96,6 +96,15 @@ class Builder
 
     private function buildQuery(): string
     {
+        $query = $this->buildConditions();
+        if (!is_null($this->limit)) {
+            $query .= " limit $this->limit";
+        }
+        return $query;
+    }
+
+    private function buildConditions(): string
+    {
         $query = '';
         if (!empty($this->conditions)) {
             $condition = $this->conditions[0];
@@ -104,10 +113,6 @@ class Builder
                 $condition = $this->conditions[$i];
                 $query .= " {$condition['type']} {$condition['column']} {$condition['operation']} '{$condition['value']}'";
             }
-        }
-
-        if (!is_null($this->limit)) {
-            $query .= " limit $this->limit";
         }
         return $query;
     }
@@ -135,14 +140,44 @@ class Builder
         return $this->find($id);
     }
 
-    public function insert(array $data): bool
+    public function update(array $data)
     {
         $keys = preg_filter('/^/', "`$this->table`" . '.`', array_keys($data));
         $keys = preg_filter('/$/', '`', $keys);
         $values = array_values($data);
         $valuesName = preg_filter('/^/', ':', array_keys($data));
 
+        $query = "UPDATE $this->table SET";
+        for ($i = 0; $i < count($values); $i++) {
+            $query .= " $keys[$i] = $valuesName[$i]";
+            if ($i !== count($values) - 1) {
+                $query .= ', ';
+            } else {
+                $query .= ' ';
+            }
+        }
+        $query .= $this->buildConditions();
+
+        var_dump($query);
+        $statement = $this->pdo->prepare($query);
+        for ($i = 0; $i < count($values); $i++) {
+            $type = PDO::PARAM_STR;
+            if ($values[$i] == null) {
+                $type = PDO::PARAM_NULL;
+            }
+            $statement->bindValue($valuesName[$i], $values[$i], $type);
+        }
+
+        return $statement->execute();
+    }
+
+    public function insert(array $data): bool
+    {
+        $keys = preg_filter('/^/', "`$this->table`" . '.`', array_keys($data));
+        $keys = preg_filter('/$/', '`', $keys);
         $keys = implode(', ', $keys);
+        $values = array_values($data);
+        $valuesName = preg_filter('/^/', ':', array_keys($data));
         $valuesNameFlatten = implode(', ', $valuesName);
 
         $statement = $this->pdo->prepare("INSERT INTO $this->table ($keys) VALUES ($valuesNameFlatten);");
