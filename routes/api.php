@@ -1,9 +1,9 @@
 <?php
 
-use Filimo\UrlShortener\Http\Controller\AuthController;
-use Filimo\UrlShortener\Http\Controller\LinkController;
-use Filimo\UrlShortener\Http\Controller\UserLinkController;
-use Filimo\UrlShortener\Support\Http\Route;
+use Mhabedini\UrlShortener\Http\Controller\AuthController;
+use Mhabedini\UrlShortener\Http\Controller\LinkController;
+use Mhabedini\UrlShortener\Http\Controller\UserLinkController;
+use Mhabedini\UrlShortener\Support\Http\Route;
 
 Route::post('auth/login', [AuthController::class, 'login']);
 Route::post('auth/signup', [AuthController::class, 'signup']);

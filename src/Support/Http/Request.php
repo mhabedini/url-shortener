@@ -1,6 +1,6 @@
 <?php
 
-namespace Filimo\UrlShortener\Support\Http;
+namespace Mhabedini\UrlShortener\Support\Http;
 
 
 class Request
@@ -38,7 +38,7 @@ class Request
             $request = (self::$requestFactory)($query, $request, $cookies, $files, $server);
 
             if (!$request instanceof self) {
-                throw new \LogicException('The Request factory must return an instance of  Filimo\UrlShortener\Support\Http\Request');
+                throw new \LogicException('The Request factory must return an instance of  Mhabedini\UrlShortener\Support\Http\Request');
             }
 
             return $request;

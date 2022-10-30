@@ -1,6 +1,6 @@
 <?php
 
-use Filimo\UrlShortener\Support\App;
+use Mhabedini\UrlShortener\Support\App;
 
 
 require_once dirname(__DIR__) . '/vendor/autoload.php';

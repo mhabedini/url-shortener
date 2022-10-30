@@ -1,6 +1,6 @@
 <?php
 
-namespace Filimo\UrlShortener\Support;
+namespace Mhabedini\UrlShortener\Support;
 
 use Dotenv\Repository\Adapter\PutenvAdapter;
 use Dotenv\Repository\RepositoryBuilder;

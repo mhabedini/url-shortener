@@ -1,6 +1,6 @@
 <?php
 
-namespace Filimo\UrlShortener\Exception;
+namespace Mhabedini\UrlShortener\Exception;
 
 use Exception;
 

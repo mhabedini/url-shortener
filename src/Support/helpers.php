@@ -1,9 +1,9 @@
 <?php
 
 
-use Filimo\UrlShortener\Support\App;
-use Filimo\UrlShortener\Support\Env;
-use Filimo\UrlShortener\Support\Http\Request;
+use Mhabedini\UrlShortener\Support\App;
+use Mhabedini\UrlShortener\Support\Env;
+use Mhabedini\UrlShortener\Support\Http\Request;
 use JetBrains\PhpStorm\NoReturn;
 
 if (!function_exists('environment')) {

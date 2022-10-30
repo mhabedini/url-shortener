@@ -1,8 +1,8 @@
 <?php
 
-namespace Filimo\UrlShortener\Service;
+namespace Mhabedini\UrlShortener\Service;
 
-use Filimo\UrlShortener\Support\Database\DB;
+use Mhabedini\UrlShortener\Support\Database\DB;
 
 class UserService
 {

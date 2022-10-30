@@ -1,9 +1,9 @@
 <?php
 
-namespace Filimo\UrlShortener\Http\Controller;
+namespace Mhabedini\UrlShortener\Http\Controller;
 
-use Filimo\UrlShortener\Exception\HttpException;
-use Filimo\UrlShortener\Support\Database\DB;
+use Mhabedini\UrlShortener\Exception\HttpException;
+use Mhabedini\UrlShortener\Support\Database\DB;
 
 class Controller
 {

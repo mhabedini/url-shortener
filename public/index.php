@@ -1,8 +1,8 @@
 <?php
 
 
-use Filimo\UrlShortener\Support\Http\HttpMethod;
-use Filimo\UrlShortener\Support\Http\Router;
+use Mhabedini\UrlShortener\Support\Http\HttpMethod;
+use Mhabedini\UrlShortener\Support\Http\Router;
 
 $app = require_once __DIR__ . '/../bootstrap/app.php';
 
@@ -13,7 +13,7 @@ $httpMethod = HttpMethod::from($_SERVER['REQUEST_METHOD']);
 
 try {
     echo Router::respond($uri, $httpMethod);
-} catch (\Filimo\UrlShortener\Exception\HttpException $exception) {
+} catch (\Mhabedini\UrlShortener\Exception\HttpException $exception) {
     if (environment('APP_DEBUG')) {
         throw $exception;
     }

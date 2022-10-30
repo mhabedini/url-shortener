@@ -1,4 +1,4 @@
-# Filimo shortener link creator
+# PHP Url shortener creator
 
 ## Requirements
 - **PHP** > 8.1

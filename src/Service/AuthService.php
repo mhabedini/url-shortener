@@ -1,10 +1,10 @@
 <?php
 
-namespace Filimo\UrlShortener\Service;
+namespace Mhabedini\UrlShortener\Service;
 
-use Filimo\UrlShortener\Exception\HttpException;
-use Filimo\UrlShortener\Support\Database\DB;
-use Filimo\UrlShortener\Support\Http\Request;
+use Mhabedini\UrlShortener\Exception\HttpException;
+use Mhabedini\UrlShortener\Support\Database\DB;
+use Mhabedini\UrlShortener\Support\Http\Request;
 
 class AuthService
 {

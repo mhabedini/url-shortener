@@ -1,15 +1,15 @@
 <?php
 
-namespace Filimo\UrlShortener\Support;
+namespace Mhabedini\UrlShortener\Support;
 
 use Dotenv\Dotenv;
 use Dotenv\Repository\Adapter\EnvConstAdapter;
 use Dotenv\Repository\Adapter\PutenvAdapter;
 use Dotenv\Repository\RepositoryBuilder;
 use Exception;
-use Filimo\UrlShortener\Support\Database\Connection;
-use Filimo\UrlShortener\Support\Database\Query\Builder;
-use Filimo\UrlShortener\Support\Http\Router;
+use Mhabedini\UrlShortener\Support\Database\Connection;
+use Mhabedini\UrlShortener\Support\Database\Query\Builder;
+use Mhabedini\UrlShortener\Support\Http\Router;
 use PDO;
 
 class App

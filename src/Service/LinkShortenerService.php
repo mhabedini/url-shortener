@@ -1,9 +1,9 @@
 <?php
 
-namespace Filimo\UrlShortener\Service;
+namespace Mhabedini\UrlShortener\Service;
 
 use Exception;
-use Filimo\UrlShortener\Support\Database\DB;
+use Mhabedini\UrlShortener\Support\Database\DB;
 
 class LinkShortenerService
 {

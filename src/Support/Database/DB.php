@@ -1,10 +1,10 @@
 <?php
 
-namespace Filimo\UrlShortener\Support\Database;
+namespace Mhabedini\UrlShortener\Support\Database;
 
 
 use Exception;
-use Filimo\UrlShortener\Support\Database\Query\Builder;
+use Mhabedini\UrlShortener\Support\Database\Query\Builder;
 
 class DB
 {

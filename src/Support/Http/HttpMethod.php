@@ -1,6 +1,6 @@
 <?php
 
-namespace Filimo\UrlShortener\Support\Http;
+namespace Mhabedini\UrlShortener\Support\Http;
 
 enum HttpMethod: string
 {

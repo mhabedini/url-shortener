@@ -1,9 +1,9 @@
 <?php
 
-namespace Filimo\UrlShortener\Support\Http;
+namespace Mhabedini\UrlShortener\Support\Http;
 
 use Exception;
-use Filimo\UrlShortener\Exception\HttpException;
+use Mhabedini\UrlShortener\Exception\HttpException;
 use ReflectionMethod;
 
 class Router

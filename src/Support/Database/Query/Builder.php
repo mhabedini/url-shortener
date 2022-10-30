@@ -1,8 +1,8 @@
 <?php
 
-namespace Filimo\UrlShortener\Support\Database\Query;
+namespace Mhabedini\UrlShortener\Support\Database\Query;
 
-use Filimo\UrlShortener\Exception\HttpException;
+use Mhabedini\UrlShortener\Exception\HttpException;
 use PDO;
 
 class Builder

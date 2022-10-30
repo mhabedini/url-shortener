@@ -1,10 +1,10 @@
 <?php
 
-namespace Filimo\UrlShortener\Http\Controller;
+namespace Mhabedini\UrlShortener\Http\Controller;
 
-use Filimo\UrlShortener\Exception\HttpException;
-use Filimo\UrlShortener\Service\AuthService;
-use Filimo\UrlShortener\Support\Http\Request;
+use Mhabedini\UrlShortener\Exception\HttpException;
+use Mhabedini\UrlShortener\Service\AuthService;
+use Mhabedini\UrlShortener\Support\Http\Request;
 
 class AuthController extends Controller
 {

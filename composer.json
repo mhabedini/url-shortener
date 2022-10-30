@@ -1,5 +1,5 @@
 {
-    "name": "filimo/url-shortener",
+    "name": "mhabedini/url-shortener",
     "type": "project",
     "license": "MIT",
     "autoload": {
@@ -7,7 +7,7 @@
             "src/Support/helpers.php"
         ],
         "psr-4": {
-            "Filimo\\UrlShortener\\": "src/"
+            "Mhabedini\\UrlShortener\\": "src/"
         }
     },
     "autoload-dev": {
