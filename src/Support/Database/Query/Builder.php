@@ -111,7 +111,7 @@ class Builder
             $condition = $this->conditions[0];
             $conditionValue = $this->prepareConditionValue($condition['value']);
             $query .= " WHERE {$condition['column']} {$condition['operation']} $conditionValue";
-            for ($i = 1; $i < count($this->conditions); $i++) {
+            for ($i = 1, $iMax = count($this->conditions); $i < $iMax; $i++) {
                 $condition = $this->conditions[$i];
                 $conditionValue = $this->prepareConditionValue($condition['value']);
                 $query .= " {$condition['type']} {$condition['column']} {$condition['operation']} $conditionValue";
@@ -161,7 +161,7 @@ class Builder
         $valuesName = preg_filter('/^/', ':', array_keys($data));
 
         $query = "UPDATE $this->table SET";
-        for ($i = 0; $i < count($values); $i++) {
+        for ($i = 0, $iMax = count($values); $i < $iMax; $i++) {
             $query .= " $keys[$i] = $valuesName[$i]";
             if ($i !== count($values) - 1) {
                 $query .= ', ';
@@ -172,7 +172,7 @@ class Builder
         $query .= $this->buildConditions();
 
         $statement = $this->pdo->prepare($query);
-        for ($i = 0; $i < count($values); $i++) {
+        for ($i = 0, $iMax = count($values); $i < $iMax; $i++) {
             $type = PDO::PARAM_STR;
             if ($values[$i] == null) {
                 $type = PDO::PARAM_NULL;
@@ -193,7 +193,7 @@ class Builder
         $valuesNameFlatten = implode(', ', $valuesName);
 
         $statement = $this->pdo->prepare("INSERT INTO $this->table ($keys) VALUES ($valuesNameFlatten);");
-        for ($i = 0; $i < count($values); $i++) {
+        for ($i = 0, $iMax = count($values); $i < $iMax; $i++) {
             $type = PDO::PARAM_STR;
             if ($values[$i] == null) {
                 $type = PDO::PARAM_NULL;
